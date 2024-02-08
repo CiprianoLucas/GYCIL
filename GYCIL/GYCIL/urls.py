@@ -23,5 +23,5 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('empresas/', include('companies.urls')),
-    path('teste/', views.index),
+    path('servicos/', include('services.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
