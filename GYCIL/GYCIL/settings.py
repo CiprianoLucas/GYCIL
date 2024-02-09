@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'companies.apps.CompaniesConfig',
     'services.apps.ServicesConfig',
     'clients.apps.ClientsConfig',
+    'login',
     'crispy_forms',
     'crispy_bootstrap5',
 ]
