@@ -1,46 +1,40 @@
 from django import forms
-from .models import Company
+from .models import Client
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 
 
-class CompanyForm(forms.ModelForm):
+class ClientForm(forms.ModelForm):
     class Meta:
-        model = Company
+        model = Client
         exclude = ["slug", "enabled", "created_at"]
         
         
         labels = {
-            "company_name": "Rasão social",
-            "fantasy_name": "Nome fantasia",
-            "representative": "Representante legal",
-            "cnpj": "CNPJ",
-            "email": "E-mail",
+            "name": "Rasão social",
+            "cpf": "Representante legal",
             "zipcode": "Cep",
             "street": "Endereço",
             "number": "Número",
             "city": "Cidade",
             "state": "Estado",
             "phone": "Telefone",
-            "logo": "Logomarca",
+            "photo": "Foto de usuario",
         }
         
         error_messages = {
-            # "name": {
-            #     "required": "O campo nome é obrigatório",
-            #     "unique": "Já existe um produto cadastrado com esse nome"
-            # },
-            # "description": {
-            #     "required": "O campo descrição é obrigatório",                
-            # },
-            # "sale_price": {
-            #     "required": "O campo preço de venda é obrigatório"
-            # },
+            "name": {
+                "required": "O campo nome é obrigatório",
+                "unique": "Já existe um produto cadastrado com esse nome"
+            },
+            "cpf": {
+                "required": "O campo descrição é obrigatório",                
+            },
         }
         
         widgets = {
-            # "expiration_date": forms.DateInput(attrs={"type":"date"}, format="%Y-%m-%d")
+            "expiration_date": forms.DateInput(attrs={"type":"date"}, format="%Y-%m-%d")
         }
         
        

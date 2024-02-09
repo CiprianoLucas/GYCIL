@@ -1,24 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
-from companies.models import Company
-from clients.models import Client
-
-class Category(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(unique=True, blank=True)
-    icon = models.ImageField(upload_to="icons_categories", blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Category, self).save(*args, **kwargs)
-
-    class Meta:
-        verbose_name = "Categoria"
-        verbose_name_plural = "Categorias"
-        
+from companies.models import Company, Category
+from clients.models import Client       
 class Service(models.Model):
     street = models.CharField(max_length=255)
     rating = models.CharField(max_length=255)
