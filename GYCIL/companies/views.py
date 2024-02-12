@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from .forms import CompanyForm
 from django.contrib import messages
+from .forms import UserForm
 
 from .models import Company
 
@@ -45,9 +46,11 @@ def create(request):
        
     if request.method == 'POST':
         form = CompanyForm(request.POST)
+        user_form = UserForm(request.POST)
         
-        if form.is_valid():
+        if form.is_valid() and user_form.is_valid():
             form.save()
+            user_form.save()
             
             messages.success(request, 'Empresa cadastrada')
             
@@ -55,15 +58,18 @@ def create(request):
         
         context = {
         'form': form,
+        'user_form': user_form,
         }
         
         return render(request, 'companies/create.html', context)
             
     
     form = CompanyForm()
+    user_form = UserForm()
     
     context = {
         'form': form,
+        'user_form': user_form,
     }
     
     return render(request, 'companies/create.html', context)
