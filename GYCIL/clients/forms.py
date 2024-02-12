@@ -12,8 +12,8 @@ class ClientForm(forms.ModelForm):
         
         
         labels = {
-            "name": "Rasão social",
-            "cpf": "Representante legal",
+            "name": "Nome completo",
+            "cpf": "CPF",
             "zipcode": "Cep",
             "street": "Endereço",
             "number": "Número",
