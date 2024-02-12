@@ -33,14 +33,12 @@ class Client(models.Model):
         "DF": "Distrito Federal",
     }
 
-    first_name = models.CharField(max_length=255, unique=True)
-    last_name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(unique=True, blank=True)
     cpf = models.CharField(max_length=20, unique=True)
-    email = models.EmailField(unique=True)
     zipcode = models.CharField(max_length=20)
     street = models.CharField(max_length=255)
-    number = models.CharField(max_length=20)
+    number = models.CharField(max_length=20, blank=True)
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=2, choices=STATE_CHOICES)
     phone = models.CharField(max_length=20)
