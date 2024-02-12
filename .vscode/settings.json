@@ -1,4 +1,5 @@
 {
     "editor.fontSize": 14,
-    "editor.accessibilityPageSize": 16
+    "editor.accessibilityPageSize": 16,
+    "files.autoSave": "onFocusChange"
 }
