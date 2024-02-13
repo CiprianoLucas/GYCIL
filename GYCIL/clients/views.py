@@ -2,7 +2,7 @@ from .forms import UserForm, ClientForm
 from .models import Client
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserForm
+from .forms import UserForm, ClientForm, UserClientForm
 
 
 # Create your views here.
@@ -18,31 +18,29 @@ def index(request):
 def create(request):
        
     if request.method == 'POST':
-        form = ClientForm(request.POST)
-        user_form = UserForm(request.POST)
-        
-        if form.is_valid() and user_form.is_valid():
-            form.save()
-            user_form.save()
-            
-            messages.success(request, 'Empresa cadastrada')
-            
+        form = UserClientForm(request.POST)
+
+        if form.is_valid():
+            user_form = form.cleaned_data['user_form']
+            client_form = form.cleaned_data['client_form']
+            user = user_form.save()            
+            client = client_form.save(commit=False)
+            client.user = user
+            client.save()
+            messages.success(request, 'Cliente cadastrado')
             return redirect('companies:index')
         
         context = {
         'form': form,
-        'user_form': user_form,
         }
         
         return render(request, 'clients/create.html', context)
             
     
-    form = ClientForm()
-    user_form = UserForm()
+    form = UserClientForm
     
     context = {
         'form': form,
-        'user_form': user_form,
     }
     
     return render(request, 'clients/create.html', context)

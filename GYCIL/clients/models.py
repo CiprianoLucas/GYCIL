@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
-from companies.models import Company
+from django.contrib.auth.models import User
 # Create your models here.
 class Client(models.Model):
     STATE_CHOICES = {
@@ -33,7 +33,8 @@ class Client(models.Model):
         "DF": "Distrito Federal",
     }
 
-    name = models.CharField(max_length=255, unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=0)
+    name = models.CharField(max_length=255, default="Sem nome")
     slug = models.SlugField(unique=True, blank=True)
     cpf = models.CharField(max_length=20, unique=True)
     zipcode = models.CharField(max_length=20)
@@ -42,16 +43,15 @@ class Client(models.Model):
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=2, choices=STATE_CHOICES)
     phone = models.CharField(max_length=20)
-    enabled = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    photo = models.ImageField(upload_to="companies_logos", blank=True, null=True)
+    photo = models.ImageField(upload_to="photos_clients", blank=True, null=True)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return self.name
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.fantasy_name)
-        super(Company, self).save(*args, **kwargs)
+        self.slug = slugify(f'{self.name}_{self.created_at}')
+        super(Client, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Cliente"

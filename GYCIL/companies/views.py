@@ -49,8 +49,11 @@ def create(request):
         user_form = UserForm(request.POST)
         
         if form.is_valid() and user_form.is_valid():
-            form.save()
+            
             user_form.save()
+            
+            form.save()
+            
             
             messages.success(request, 'Empresa cadastrada')
             

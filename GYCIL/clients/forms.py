@@ -74,3 +74,7 @@ class UserForm(forms.ModelForm):
             self.add_error('username', ValidationError('Informe um endereço de email válido'))
             
         return super().clean()
+        
+class UserClientForm(forms.Form):
+    user_form = UserForm(prefix='user')
+    client_form = ClientForm(prefix='client')

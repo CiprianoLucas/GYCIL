@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -47,7 +48,8 @@ class Company(models.Model):
         "TO": "Tocantins",
         "DF": "Distrito Federal",
     }
-
+    
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default="0")
     fantasy_name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)
     representative = models.CharField(max_length=255)
