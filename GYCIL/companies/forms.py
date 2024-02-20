@@ -8,7 +8,7 @@ from django.core.validators import validate_email
 class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
-        exclude = ["slug", "enabled", "created_at"]
+        exclude = ["slug", "enabled", "created_at", "user"]
         
         
         labels = {
@@ -26,24 +26,15 @@ class CompanyForm(forms.ModelForm):
             "logo": "Logomarca",
         }
         
-        error_messages = {
-            # "name": {
-            #     "required": "O campo nome é obrigatório",
-            #     "unique": "Já existe um produto cadastrado com esse nome"
-            # },
-            # "description": {
-            #     "required": "O campo descrição é obrigatório",                
-            # },
-            # "sale_price": {
-            #     "required": "O campo preço de venda é obrigatório"
-            # },
-        }
+        def save(self, commit=True):
         
-        widgets = {
-            # "expiration_date": forms.DateInput(attrs={"type":"date"}, format="%Y-%m-%d")
-        }
-        
-       
+            company = super().save(commit=False)
+                
+            if commit:
+                company.save()
+            
+            return company
+              
 class UserForm(forms.ModelForm):
     class Meta:
         model = User

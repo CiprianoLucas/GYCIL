@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
 from companies.models import Company, Category
-from clients.models import Client       
+from clients.models import Client
+from django.contrib.auth.models import User
 class Service(models.Model):
     street = models.CharField(max_length=255)
     rating = models.CharField(max_length=255)

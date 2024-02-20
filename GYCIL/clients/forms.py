@@ -8,7 +8,7 @@ from django.core.validators import validate_email
 class ClientForm(forms.ModelForm):
     class Meta:
         model = Client
-        exclude = ["slug", "enabled", "created_at"]
+        exclude = ["slug", "enabled", "created_at", "user"]
         
         
         labels = {
@@ -36,6 +36,16 @@ class ClientForm(forms.ModelForm):
         widgets = {
             "expiration_date": forms.DateInput(attrs={"type":"date"}, format="%Y-%m-%d")
         }
+        
+        def save(self, commit=True):
+        
+            client = super().save(commit=False)
+                
+            if commit:
+                client.save()
+            
+            return client
+            
         
        
 class UserForm(forms.ModelForm):
@@ -74,3 +84,5 @@ class UserForm(forms.ModelForm):
             self.add_error('username', ValidationError('Informe um endereço de email válido'))
             
         return super().clean()
+        
+        
