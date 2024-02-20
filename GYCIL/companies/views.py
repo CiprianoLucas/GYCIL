@@ -1,9 +1,8 @@
 from django.shortcuts import render, get_list_or_404, redirect
 from django.urls import reverse
 from django.core.paginator import Paginator
-from .forms import CompanyForm
+from .forms import CompanyForm, UserForm
 from django.contrib import messages
-from .forms import UserForm
 
 from .models import Company
 
@@ -45,34 +44,31 @@ def companies_with_category(request):
 def create(request):
        
     if request.method == 'POST':
-        form = CompanyForm(request.POST)
         user_form = UserForm(request.POST)
-        
-        if form.is_valid() and user_form.is_valid():
-            
-            user_form.save()
-            
-            form.save()
-            
-            
-            messages.success(request, 'Empresa cadastrada')
-            
+        company_form = CompanyForm(request.POST)
+
+        if user_form.is_valid() and company_form.is_valid():
+            user = user_form.save()
+            client = company_form.save(commit=False)
+            client.user = user
+            client.save()
+            messages.success(request, 'Cliente cadastrado')
             return redirect('companies:index')
         
         context = {
-        'form': form,
         'user_form': user_form,
+        'company_form': company_form
         }
         
         return render(request, 'companies/create.html', context)
             
     
-    form = CompanyForm()
     user_form = UserForm()
+    company_form = CompanyForm()
     
     context = {
-        'form': form,
-        'user_form': user_form,
+    'user_form': user_form,
+    'company_form': company_form
     }
     
     return render(request, 'companies/create.html', context)

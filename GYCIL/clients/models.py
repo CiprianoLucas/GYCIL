@@ -50,7 +50,7 @@ class Client(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(f'{self.name}_{self.created_at}')
+        self.slug = slugify(f'{self.name}_{self.user}')
         super(Client, self).save(*args, **kwargs)
 
     class Meta:
