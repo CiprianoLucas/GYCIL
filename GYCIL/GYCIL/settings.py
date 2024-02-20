@@ -37,7 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'companies.apps.CompaniesConfig'
+    'companies.apps.CompaniesConfig',
+    'services.apps.ServicesConfig',
+    'users.apps.UsersConfig',
+    'clients.apps.ClientsConfig',
+    'login',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +138,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / 'base' / 'static'
 ]
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
+MEDIA_ROOT = BASE_DIR / 'database_media'
+MEDIA_URL = 'media/'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"

@@ -23,7 +23,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
-              <img src="{% static 'base/img/logo_oficial.png' %}" alt="Logo" width="30" height="24" class="logo">
+              <img src="{% static 'base/img/testeteste.png' %}" alt="Logo" width="30" height="24" class="logo">
               
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +35,7 @@
                 <a class="nav-link active" aria-current="page" href="#">Como funciona</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Seja um profissional</a>
+                <a class="nav-link" href="{% url 'companies:create' %}">Seja um profissional</a>
               </li>
             </ul>
             <form class="d-flex" role="search">
@@ -45,5 +45,14 @@
           </div>
         </div>
       </nav>
+      <main>
+        <div class="row mb-3 justify-content-center">
+          <div class="col-lg-2 d-none d-lg-block">teste</div>
+          <div class="col-lg-8">
+            {% block content %}{% endblock  %}
+          </div>
+          <div class="col-lg-2 d-none d-lg-block">teste1</div>
+        </div>
+      </main>
 </body>
 </html>

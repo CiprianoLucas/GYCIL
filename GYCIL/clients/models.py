@@ -1,23 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
-
-
-class Category(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(unique=True, blank=True)
-    icon = models.ImageField(upload_to="icons_categories", blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Category, self).save(*args, **kwargs)
-
-    class Meta:
-        verbose_name = "Categoria"
-        verbose_name_plural = "Categorias"
-class Company(models.Model):
+from companies.models import Company
+# Create your models here.
+class Client(models.Model):
     STATE_CHOICES = {
         "AC": "Acre",
         "AL": "Alagoas",
@@ -48,30 +33,26 @@ class Company(models.Model):
         "DF": "Distrito Federal",
     }
 
-    fantasy_name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(unique=True, blank=True)
-    representative = models.CharField(max_length=255)
-    cnpj = models.CharField(max_length=20, unique=True)
+    cpf = models.CharField(max_length=20, unique=True)
     zipcode = models.CharField(max_length=20)
     street = models.CharField(max_length=255)
-    number = models.CharField(max_length=20)
+    number = models.CharField(max_length=20, blank=True)
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=2, choices=STATE_CHOICES)
     phone = models.CharField(max_length=20)
     enabled = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    logo = models.ImageField(upload_to="companies_logos", blank=True, null=True)
-    categories = models.ManyToManyField(Category, blank=True)
+    photo = models.ImageField(upload_to="companies_logos", blank=True, null=True)
 
     def __str__(self):
-        return self.fantasy_name
+        return f"{self.first_name} {self.last_name}"
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.fantasy_name)
         super(Company, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = "Empresa"
-        verbose_name_plural = "Empresas"
-        
-
+        verbose_name = "Cliente"
+        verbose_name_plural = "Clientes"
