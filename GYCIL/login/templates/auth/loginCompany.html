@@ -1,44 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina de Login</title>
-</head>
-<body>
-    <div class="logo">
-        <img src="GYCIL\base\static\base\img\logo_nav.png" alt="logotipo">
-    </div>
-    <h1>Login Empresa</h1>
-    
-    <div>
-        <form action= "{% url 'login:company' %}" method="POST">{% csrf_token %}
-            <p>Email:</p>
-            <input type="email_user" placeholder="Email..." name="email_user">
-            <br>
-            <br>
-            <p>CNPJ:</p>
-            <input type="cnpj" placeholder="CNPJ..." name="cnpj">
-            <br>
-            <br>
-            <p>Senha:</p>
-            <input type="password_company" placeholder="Senha..." name="password_company">
-            <br><br>
-            {% if error_message %}
-                <p>Esqueceu sua senha?</p> <!-- Adicione um link para a pagina de recuperação de senha -->
-            {% endif %}
-            <br>
-            <br>
-            {% if error_message %}
-                <p>{{ error_message }}</p>
-            {% endif %}
-            <br>
-            <br>
-            <input type="submit" value="Login">
-        </form>
-    </div>
+{% block title %}
+  Login Empresa
+{% endblock %}
+{% block head %}
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+  <script src="{% static 'products/js/createUpdate.js' %}"></script>
+{% endblock %}
 
-    <p>Sua empresa não esta cadastrada?</p> <!-- Adicione um link para a pagina cadastro--> <p>Cadastre-a</p>
-</body>
-</html>
+{% block content %}
+    <div class="container-sm">
+        <div class="text-center">
+            <h2 class="text-center">Faça o Login de sua Empresa </h2>
+            <div class="">
+                        <form action= "{% url 'login:company' %}" method="POST">{% csrf_token %}
+                            <div class="mb-3 text-start">
+                                <label for="exampleFormControlInput1" class="form-label">Email:</label>
+                                <input type="email" class="form-control text-center shadow p-3 mb-5 bg-body-tertiary rounded" id="exampleFormControlInput1" placeholder="empresa@exemplo.com" name="email_user">
+                              </div>
+                            <div class="mb-3 text-start">
+                                <label for="exampleFormControlInput1" class="form-label">CNPJ:</label>
+                                <input type="cnpj" class="form-control text-center shadow p-3 mb-5 bg-body-tertiary rounded" id="exampleFormControlInput1" placeholder="Digite o CNPJ da sua empresa" name="cnpj">
+                              </div>
+                            <div class="mb-3 text-start">
+                                <label for="exampleFormControlInput1" class="form-label">Senha:</label>
+                                <input type="password_company" class="form-control text-center shadow p-3 mb-5 bg-body-tertiary rounded" id="exampleFormControlInput1" placeholder="Digite sua senha" name="password_company">
+                              </div>
+                            {% comment %} <div class="row g-3">
+                                <div class="col">
+                                    <input class="form-control text-center" type="email_user" placeholder="E-mail" name="email_user">
+                                </div>
+                            </div>
+                            <p>CNPJ:</p>
+                            <div class="col">
+                                <input class="form-control text-center" type="cnpj" placeholder="CNPJ" name="cnpj">
+                            </div>
+                            <p>Senha:</p>
+                            <div class="col">
+                                <input class="form-control text-center" type="password_company" placeholder="Senha" name="password_company">
+                            </div> {% endcomment %}
+                            <div class="mb-3 mt-3">
+                                {% if error_message %}
+                                    <a href="">Esqueceu a senha?</a> <!-- Adicione um link para a pagina de recuperação de senha -->
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-3 mt-3">
+                                {% if error_message %}
+                                    <p>{{ error_message }}</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3 mt-3">
+                                <input class="form-control submitBtn" type="submit" value="Entrar">
+                            </div>
+                        </form>
+
+                    <p>Sua empresa não esta cadastrada?</p>
+
+                    <a href="">Cadastre agora</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
