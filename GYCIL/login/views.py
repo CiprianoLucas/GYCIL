@@ -1,20 +1,18 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from django.urls import reverse
-from django.contrib.auth.views import LoginView
+from django.views import View
+from django.http import HttpResponse
 
-class UserLoginView(LoginView):
+class UserLoginView(View):
     template_name = "auth/loginUser.html"
     next_page = 'companies:index'
     redirect_authenticated_user = True
 
+    def get(self, request):
+        error_message = None
+        return self.mostrar_pagina_login_user(request, error_message)
 
-def mostrar_pagina_login_user(request, error_message=None):
-    return render(request, 'loginUser.html', {'error_message': error_message})
-    
-
-def login_user(request):
-    if request.method == 'POST':
+    def post(self, request):
         email_user = request.POST.get('email_user')
         password_user = request.POST.get('password_user')
         user = authenticate(request, email_user=email_user, password_user=password_user)
@@ -24,16 +22,21 @@ def login_user(request):
             return redirect('companies:index')
         else:
             error_message = "Email ou senha incorretos. Por favor, tente novamente."
-            return mostrar_pagina_login_user(request, error_message)
-    else:
-        return mostrar_pagina_login_user(request)
-        
+            return self.mostrar_pagina_login_user(request, error_message)
 
-def mostrar_pagina_login_company(request, error_message=None):
-    return render(request, 'loginCompany.html', {'error_message': error_message})
-    
-def login_company(request):
-    if request.method == 'POST':
+    def mostrar_pagina_login_user(self, request, error_message=None):
+        return render(request, self.template_name, {'error_message': error_message})
+
+
+class CompanyLoginView(View):
+    template_name = "auth/loginCompany.html"
+    next_page = 'companies:index'
+
+    def get(self, request):
+        error_message = None
+        return self.mostrar_pagina_login_company(request, error_message)
+
+    def post(self, request):
         email_company = request.POST.get('email_company')
         cnpj = request.POST.get('cnpj')
         password_company = request.POST.get('password_company')
@@ -44,6 +47,7 @@ def login_company(request):
             return HttpResponse('Login realizado com sucesso!')
         else:
             error_message = "Email ou senha incorretos. Por favor, tente novamente."
-            return mostrar_pagina_login_company(request, error_message)
-    else:
-        return mostrar_pagina_login_company(request)
+            return self.mostrar_pagina_login_company(request, error_message)
+
+    def mostrar_pagina_login_company(self, request, error_message=None):
+        return render(request, self.template_name, {'error_message': error_message})
