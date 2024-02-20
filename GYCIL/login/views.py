@@ -1,53 +1,48 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.views import View
-from django.http import HttpResponse
+from django.urls import reverse_lazy
+from django.contrib import messages
+from django.contrib.auth.hashers import make_password
+from .forms import UserForm, CompanyForm
 
 class UserLoginView(View):
-    template_name = "auth/loginUser.html"
-    next_page = 'companies:index'
-    redirect_authenticated_user = True
+    template_name = 'auth/loginUser.html'
 
     def get(self, request):
-        error_message = None
-        return self.mostrar_pagina_login_user(request, error_message)
+        form = UserForm()
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
-        email_user = request.POST.get('email_user')
-        password_user = request.POST.get('password_user')
-        user = authenticate(request, email_user=email_user, password_user=password_user)
-        
-        if user is not None:
-            login(request, user)
-            return redirect('companies:index')
-        else:
-            error_message = "Email ou senha incorretos. Por favor, tente novamente."
-            return self.mostrar_pagina_login_user(request, error_message)
-
-    def mostrar_pagina_login_user(self, request, error_message=None):
-        return render(request, self.template_name, {'error_message': error_message})
-
+        form = UserForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            senha = form.cleaned_data.get('senha')
+            user = authenticate(request, email=email, senha=senha)
+            if user is not None:
+                login(request, user)
+                return redirect(reverse_lazy('companies:index'))  # Redireciona para a página de índice das empresas após o login bem-sucedido
+            else:
+                messages.error(request, "Email ou senha incorretos. Por favor, tente novamente.")
+        return render(request, self.template_name, {'form': form})
 
 class CompanyLoginView(View):
     template_name = "auth/loginCompany.html"
-    next_page = 'companies:index'
 
     def get(self, request):
-        error_message = None
-        return self.mostrar_pagina_login_company(request, error_message)
+        form = CompanyForm()
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
-        email_company = request.POST.get('email_company')
-        cnpj = request.POST.get('cnpj')
-        password_company = request.POST.get('password_company')
-        company = authenticate(request, email_company=email_company, cnpj=cnpj, password_company=password_company)
-
-        if company is not None:
-            login(request, company)
-            return HttpResponse('Login realizado com sucesso!')
-        else:
-            error_message = "Email ou senha incorretos. Por favor, tente novamente."
-            return self.mostrar_pagina_login_company(request, error_message)
-
-    def mostrar_pagina_login_company(self, request, error_message=None):
-        return render(request, self.template_name, {'error_message': error_message})
+        form = CompanyForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            cnpj = form.cleaned_data.get('cnpj')
+            senha = form.cleaned_data.get('senha')
+            company = authenticate(request, email=email, cnpj=cnpj, senha=senha)
+            if company is not None:
+                login(request, company)
+                return redirect(reverse_lazy('companies:index'))  # Redireciona para a página de índice das empresas após o login bem-sucedido
+            else:
+                messages.error(request, "Email, CNPJ ou senha incorretos. Por favor, tente novamente.")
+        return render(request, self.template_name, {'form': form})
