@@ -1,3 +1,4 @@
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +13,7 @@
     <h1>Login Empresa</h1>
     
     <div>
-        <form action= "{% url 'login' %}" method="POST">{% csrf_token %}
+        <form action= "{% url 'login:company' %}" method="POST">{% csrf_token %}
             <p>Email:</p>
             <input type="email_user" placeholder="Email..." name="email_user">
             <br>
