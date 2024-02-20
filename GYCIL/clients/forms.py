@@ -45,6 +45,17 @@ class ClientForm(forms.ModelForm):
                 client.save()
             
             return client
+        
+        def clean(self):
+               
+            client_email = self.cleaned_data.get('email')
+            
+            try:
+                validate_email(client_email)
+            except ValidationError:
+                self.add_error('email', ValidationError('Informe um endereço de email válido'))
+                
+            return super().clean()
             
         
        
@@ -74,15 +85,6 @@ class UserForm(forms.ModelForm):
             
         return user
     
-    def clean(self):
-               
-        username = self.cleaned_data.get('username')
-        
-        try:
-            validate_email(username)
-        except ValidationError:
-            self.add_error('username', ValidationError('Informe um endereço de email válido'))
-            
-        return super().clean()
+
         
         

@@ -45,9 +45,10 @@ def create(request):
        
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-        company_form = CompanyForm(request.POST)
+        company_form = CompanyForm(request.POST, request.FILES)
 
         if user_form.is_valid() and company_form.is_valid():
+                       
             user = user_form.save()
             client = company_form.save(commit=False)
             client.user = user

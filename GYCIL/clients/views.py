@@ -19,7 +19,7 @@ def create(request):
        
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-        client_form = ClientForm(request.POST)
+        client_form = ClientForm(request.POST, request.FILES)
 
         if user_form.is_valid() and client_form.is_valid():
             user = user_form.save()

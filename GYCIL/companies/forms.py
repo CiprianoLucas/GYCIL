@@ -34,6 +34,17 @@ class CompanyForm(forms.ModelForm):
                 company.save()
             
             return company
+        
+        def clean(self):
+               
+            company_email = self.cleaned_data.get('email')
+            
+            try:
+                validate_email(company_email)
+            except ValidationError:
+                self.add_error('email', ValidationError('Informe um endereço de email válido'))
+                
+            return super().clean()
               
 class UserForm(forms.ModelForm):
     class Meta:
@@ -60,14 +71,3 @@ class UserForm(forms.ModelForm):
             user.save()
             
         return user
-    
-    def clean(self):
-               
-        username = self.cleaned_data.get('username')
-        
-        try:
-            validate_email(username)
-        except ValidationError:
-            self.add_error('username', ValidationError('Informe um endereço de email válido'))
-            
-        return super().clean()
