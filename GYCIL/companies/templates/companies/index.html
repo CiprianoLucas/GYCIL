@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+  Empresas
+{% endblock %}
+{% load static %}
+{% block head %}
+  <script src="{% static 'base/js/index.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <h2 class="mb-3 text-center">Empresas</h2>
+  <hr />
+  <div class="row d-flex justify-content-center ms-1 me-1">
+    {% for company in companies %}
+        <div class="col-lg-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    {% if company.logo %}
+                    <img src="{{company.logo.url}}" height="50" width="50" alt="{{company.fantasy_name}}" class="imf-fluid rounded">
+                    {% else %}
+                    <img src="{% static 'base/img/logo_diamond.png' %}" alt="height=50" width="50" alt="{{company.fantasy_name}}" class="imf-fluid rounded">
+                    {% endif %}
+                    <h3>{{ company.fantasy_name }}</h3>
+                    <p>{{ company.city }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
