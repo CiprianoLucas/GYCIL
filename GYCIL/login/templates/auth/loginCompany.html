@@ -2,6 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block title %}
+{% include "partials/_head.html" %}
   Login Empresa
 {% endblock %}
 {% block head %}
@@ -55,11 +56,13 @@
                             <div class="mb-3 mt-3">
                                 <input class="form-control submitBtn" type="submit" value="Entrar">
                             </div>
+
+                            <p>Sua empresa não esta cadastrada?</p>
+        
+                            <a class="color_link" href="">Cadastre agora</a>
+
                         </form>
 
-                    <p>Sua empresa não esta cadastrada?</p>
-
-                    <a href="">Cadastre agora</a>
             </div>
         </div>
     </div>

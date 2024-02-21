@@ -1,3 +1,12 @@
+@font-face {
+  font-family: Montserrat;
+  src: url(../fonts/Montserrat/Montserrat-VariableFont_wght.ttf)
+}
+
+body {
+  font-family: Montserrat;
+}
+
 /* Logo da Navbar */
 .logo {
     width: 130px;
@@ -33,4 +42,14 @@
   
   .submitBtn:active {
     transform: translateY(-1px);
+  }
+
+  /* Cor dos Botões de Link <a> */
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  
+  a:hover {
+    color: hsl(156, 70%, 45%);
   }
