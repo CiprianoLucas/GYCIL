@@ -7,4 +7,5 @@ urlpatterns = [
     path("cliente", views.my_services_client, name="my_services_client"),
     path("empresa", views.my_services_company, name="my_services_company"),
     path("<int:id>/descricao/", views.descriptions, name = "descriptions"),
+    path("procurar/<str:q>", views.search, name="search"),
 ]

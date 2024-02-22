@@ -5,6 +5,7 @@ from django.contrib import messages
 from .models import Service
 from companies.models import Company
 from django.db import transaction
+from django.db.models import Q
 from django.http import JsonResponse
 # Create your views here.
 
@@ -27,6 +28,28 @@ def index(request):
         "form_action": form_action
     }
 
+    return render(request, "services/index.html", context)
+
+def search(request, q):
+    
+    search_value = q
+         
+    if not search_value:
+        return redirect("services:index")
+       
+    services = Service.objects \
+        .filter(Q(id__icontains=search_value) |
+                Q(city__icontains=search_value)|
+                Q(category__name__icontains=search_value))\
+        .order_by("-id")
+           
+    # Criando o paginator
+    paginator = Paginator(services, 30)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    
+    context = { "services": page_obj }
+    
     return render(request, "services/index.html", context)
 
 def refuse_service(request):
