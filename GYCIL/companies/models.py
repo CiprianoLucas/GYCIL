@@ -1,6 +1,10 @@
 from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.models import User
+from PIL import Image
+import os
+from django.core.files.base import ContentFile
+from io import BytesIO
 
 
 class Category(models.Model):
@@ -63,14 +67,55 @@ class Company(models.Model):
     enabled = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     logo = models.ImageField(upload_to="companies_logos", blank=True, null=True)
+    thumbnail = models.ImageField(upload_to="companies_logo_thumb", blank=True, null=True)
     categories = models.ManyToManyField(Category, blank=True)
 
     def __str__(self):
         return self.fantasy_name
-
+        
     def save(self, *args, **kwargs):
         self.slug = slugify(self.fantasy_name)
+        
+        # Removendo imagens antigs
+        if self.pk:
+            old_obj = Company.objects.filter(pk=self.pk).first()
+            if old_obj and old_obj.logo != self.logo:
+                self.__delete_file_if_exists(old_obj.logo)
+            if old_obj and old_obj.thumbnail:
+                self.__delete_file_if_exists(old_obj.thumbnail)
+            
         super(Company, self).save(*args, **kwargs)
+
+        # Criando a thumbnail
+        self.__create_thumbnail()
+        super(Company, self).save(*args, **kwargs)
+        
+    def __create_thumbnail(self):
+        if not self.logo:
+            return
+
+        logo = Image.open(self.logo.path)
+        size = (30, 30)
+        logo.thumbnail(size)
+
+        thumb_io = BytesIO()
+        logo.save(thumb_io, logo.format, quality=85)
+
+        name, extension = os.path.splitext(
+            self.logo.name)
+        thumb_filename = f"{name}_thumb{extension}"
+
+        self.thumbnail.save(thumb_filename, ContentFile(
+            thumb_io.getvalue()), save=False)
+
+    def __delete_file_if_exists(self, file):
+        if file and os.path.isfile(file.path):
+            os.remove(file.path)
+
+    def delete(self, *args, **kwargs):
+        self.__delete_file_if_exists(self.logo)
+        self.__delete_file_if_exists(self.thumbnail)
+        super(Company, self).delete(*args, **kwargs)
 
     class Meta:
         verbose_name = "Empresa"
