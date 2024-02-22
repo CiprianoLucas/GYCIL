@@ -8,7 +8,7 @@ from django.core.validators import validate_email
 class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
-        exclude = ["slug", "enabled", "created_at", "user"]
+        exclude = ["slug", "enabled", "created_at", "user", "thumbnail"]
         
         
         labels = {

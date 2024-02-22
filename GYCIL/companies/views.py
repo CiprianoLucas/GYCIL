@@ -21,7 +21,7 @@ def index(request):
         lines += 1
 
     context = {
-        "companies": page_obj.object_list,
+        "companies": page_obj,
         "lines": lines,
     }
 

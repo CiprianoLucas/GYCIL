@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% block title %}
+  Serviços
+{% endblock %}
+{% load static %}
+{% block head %}
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+{% endblock %}
+
+{% block content %}
+  <h2 class="mb-3 text-center">Serviços solicitados</h2>
+  <hr />
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Categoria</th>
+          <th>Estado</th>
+          <th>Cidade</th>
+          <th>Solicitante</th>
+          <th>Abertura</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for service in services %}
+          <tr>
+            <td>{{ service.id }}</td>
+            <td>{{ service.category.name }}</td>
+            <td>{{ service.state }}</td>
+            <td>{{ service.city }}</td>
+            <td>{{ service.client.name }}</td>
+            <td>{{ service.created_at }}</td>
+
+            <td class="d-flex gap-1">
+              {% if form_action == '/servicos/empresa' %}
+                <h2 class="mb-3">Hello</h2>
+              {% elif form_action == '/servicos/cliente' %}
+                <h2 class="mb-3">Teste</h2>
+              {% else %}
+                <button data-url="{% url 'services:descriptions' service.id %}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#serviceModal">i</button>
+                <a href="#" class="btn btn-warning btn-sm" title="editar produto"><i class="bi bi-pencil"></i></a>
+              {% endif %}
+              <form method="post" action="#">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm" title="remover produto"><i class="bi bi-trash"></i></button>
+              </form>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="8" class="text-center">Nenhum serviço disponível.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if services.paginator.num_pages > 1 %}
+      <nav aria-label="Paginação da página">
+        <ul class="pagination justify-content-end">
+          {% if services.has_previous %}
+            <li class="page-item">
+              <a href="?page={{ services.previous_page_number }}&q={{ request.GET.q }}" class="page-link" aria-label="Anterior">&laquo;</a>
+            </li>
+          {% endif %}
+          <li class="page-item active">
+            <span class="page-link">{{ services.number }}</span>
+          </li>
+          {% if services.has_next %}
+            <li class="page-item">
+              <a href="?page={{ services.next_page_number }}&q={{ request.GET.q }}" class="page-link" aria-label="Próximo">&raquo;</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+  </div>
+
+  <!-- Button trigger modal -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="serviceModalLabel">SERVIÇO DE {{ service.category }} - {{ service.id }}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <div>
+              <h4>Cidade - Estado</h4>
+            </div>
+            <div>
+              <p id="state_city"></p>
+            </div>
+          </div>
+          <div>
+            <div>
+              <h4>Endereço</h4>
+            </div>
+            <div>
+              <p id="street"></p>
+            </div>
+          </div>
+          <div>
+            <div>
+              <h4>CEP</h4>
+            </div>
+            <div>
+              <p id="cep"></p>
+            </div>
+          </div>
+          <div>
+            <div>
+              <h4>Cliente</h4>
+            </div>
+            <div>
+              <p id="client"></p>
+            </div>
+          </div>
+          <div>
+            <div>
+              <h4>Descrição</h4>
+            </div>
+            <div>
+              <p id="description"></p>
+            </div>
+          </div>
+          <div>
+            <div>
+              <h4>Solicitado</h4>
+            </div>
+            <div>
+              <p id="created_at"></p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary">Aceitar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
