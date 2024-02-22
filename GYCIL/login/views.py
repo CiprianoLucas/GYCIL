@@ -8,9 +8,9 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
+            username = form.cleaned_data['username']  # Modificado de 'email' para 'username'
             senha = form.cleaned_data['senha']
-            user = authenticate(request, email=email, senha=senha)
+            user = authenticate(request, username=username, password=senha)
             if user is not None:
                 login(request, user)
                 return redirect('companies:create')  

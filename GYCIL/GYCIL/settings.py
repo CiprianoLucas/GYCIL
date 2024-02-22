@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'login.apps.LoginConfig',
     'crispy_forms',
     'crispy_bootstrap5',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
