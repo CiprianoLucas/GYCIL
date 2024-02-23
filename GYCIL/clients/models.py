@@ -57,15 +57,7 @@ class Client(models.Model):
        
     def save(self, *args, **kwargs):
         self.slug = slugify(f'{self.name}_{self.user}')
-        
-        # Removendo imagens antigs
-        if self.pk:
-            old_obj = Client.objects.filter(pk=self.pk).first()
-            if old_obj and old_obj.photo != self.photo:
-                self.__delete_file_if_exists(old_obj.photo)
-            if old_obj and old_obj.thumbnail:
-                self.__delete_file_if_exists(old_obj.thumbnail)
-            
+                       
         super(Client, self).save(*args, **kwargs)
 
         # Criando a thumbnail
@@ -76,18 +68,17 @@ class Client(models.Model):
         if not self.photo:
             return
 
-        photo = Image.open(self.photo.path)
+        photo = Image.open(self.photo)
         size = (30, 30)
         photo.thumbnail(size)
 
         thumb_io = BytesIO()
         photo.save(thumb_io, photo.format, quality=85)
+        extension = f".{photo.format.lower()}"
+        
 
-        name, extension = os.path.splitext(
-            self.photo.name)
-        thumb_filename = f"{name}_thumb{extension}"
 
-        self.thumbnail.save(thumb_filename, ContentFile(
+        self.thumbnail.save(f'{self.slug}_thumb{extension}', ContentFile(
             thumb_io.getvalue()), save=False)
 
     def __delete_file_if_exists(self, file):
