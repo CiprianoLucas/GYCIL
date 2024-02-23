@@ -2,45 +2,141 @@
 <!DOCTYPE html>
 
 <html lang="pt-br">
-{% include "partials/_head.html" %}
-<body>
-    {% comment %} Navbar {% endcomment %}
-      {% block nav %}
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-          <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="{% static 'base/img/logo_oficial.png' %}" alt="Logo" width="30" height="24" class="logo">
-                
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Como funciona</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'companies:create' %}">Seja um profissional</a>
-                </li>
-              </ul>
-              <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
-            </div>
-          </div>
-        </nav>
-      {% endblock %}
-      <main>
-        <div class="row mb-3 justify-content-center">
-          <div class="col-lg-2 d-none d-lg-block"></div>
-          <div class="col-lg-8">
-            
-          </div>
-          <div class="col-lg-2 d-none d-lg-block"></div>
+  {% include 'partials/_head.html' %}
+  <body>
+    {% comment %}Navbar{% endcomment %}
+    {% include 'partials/_navbar.html' %}
+
+    <main class="container">
+      <header class="">
+        <div>
+          <h3>Diversos tipos de Serviços e empresas em um só lugar</h3>
+          
+          <p>Encontre as melhores empresas e contrate serviços para tudo que precisar.</p>
+          
         </div>
-      </main>
-      {% block content %}{% endblock  %}
-</body>
+        
+        <img class="img img-fluid" width="700" src="{% static 'base/img/header-image.png' %}" alt="header-image" />
+      </header>
+
+      <div class="row mb-4 my-4">
+        <div class="col-8">
+          <div class="input-group">
+            <i class="bi bi-search input-group-text"></i>
+            <input class="form-control"/>
+          </div>
+        </div>
+        <div class="col-4">
+          <input class="form-control btn btn-success" type="submit" value="Pesquisar" />
+        </div>
+      </div>
+
+      <section class="">
+        <div class="text-center">
+          <h4>Quem contratou <br /> recomenda</h4>
+
+          <p>
+            São mais de 500 mil clientes <br /> e profissionais satisfeitos
+          </p>
+        </div>
+        <div class="container-sm mt-3">
+          <h1>"</h1>
+          <i>
+            <p>
+              fui muito bem atendido, a empresa <br />
+              foi muito profissional e <br />
+              fez um bom trabalho de qualidade. <br />
+              Orçamento grátis e não é careiro. <br /><br />
+              <b>Serviço de Assistência Técnica:</b> Lucas Cipriano contratou um serviço de São Paulo, SP
+            </p>
+          </i>
+
+          <h1>"</h1>
+          <i>
+            <p>
+              As empresas são muito bem organizadas e <br />
+              dedicadas com seus serviços, tudo que é <br />
+              pedido é feito de maneira como pedido. <br />
+              Aprovado! <br /><br />
+              <b>Serviço de Eventos:</b> Igor Faggiani contratou bum serviço de Santa Catarina, SC
+            </p>
+          </i>
+
+          <h1>"</h1>
+          <i>
+            <p>
+              Um excelente profissional, e acima de tudo <br />
+              confiável. Foi bastante atenciosa aos detalhes <br />
+              e extremamente educada, recomendo! <br /><br />
+              <b>Serviço de Diarista:</b> Yuri Campos contratou bum serviço de Santa Catarina, SC
+            </p>
+          </i>
+        </div>
+      </section>
+
+      <section class="">
+        <div class="text-center">
+          <h4>O que é a GYCIL?</h4>
+          <p>
+            GYCIL é uma plataforma de contratação de serviços
+            de empresas do Brasil. Conectando diversas empresas com pessoas que necessitam de serviços e buscam facilidade e rapidez.
+          </p>
+        </div>
+
+        <div class="container-sm mt-3 text-center">
+          <span><i class="bi bi-credit-card"></i></span>
+          <h5>Faça seu pedido</h5>
+          <p>Fale o que você precisa. É rápido, é de graça!</p>
+          <hr class="line">
+
+          <span><i class="bi bi-cash-coin"></i></span>
+          <h5>Receba diversos orçamentos</h5>
+          <p>Empresas avaliadas entram em contato com vocÊ em instantes!</p>
+          <hr class="line">
+
+          <span><i class="bi bi-hand-thumbs-up"></i></span>
+          <h5>Escolha o melhor</h5>
+          <p>Negocie com as empresas, fácil como nunca visto antes!</p>
+          <hr class="line">
+        </div>
+      </section>
+
+      <section class="">
+        <div class="card">
+          <div class="card-body">
+            <div class="no-margin">
+              <h4>Cadastre-se na GYCIL</h4>
+              <P>Preencha os campos abaixo:</P>
+            </div>
+            <form action="">
+              <div class="row space-between start-sm top-sm">
+                <div class="col-sm-12 col-md-4">
+                  <div class="text-field-container">
+                    <label for="email" class="form-label">Razão Social</label>
+                    <input type="email" class="form-control text-center shadow p-3 mb-5 bg-body-tertiary rounded" id="exampleFormControlInput1" placeholder="Digite a Razão Social" name="email_user" />
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                  <div class="col-sm-12 col-md-4">
+                    <div class="text-field-container">
+                      <label for="exampleFormControlInput1" class="form-label">CNPJ:</label>
+                      <input type="cnpj" class="form-control text-center shadow p-3 mb-5 bg-body-tertiary rounded" id="exampleFormControlInput1" placeholder="Digite o CNPJ da sua empresa" name="cnpj" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                  <div class="col-sm-4 col-md-4">
+                    <input class="form-control submitBtn" type="submit" value="Cadastre-se" />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+    {% block content %}
+
+    {% endblock %}
+  </body>
 </html>
