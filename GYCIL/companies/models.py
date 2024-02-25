@@ -75,15 +75,7 @@ class Company(models.Model):
         
     def save(self, *args, **kwargs):
         self.slug = slugify(self.fantasy_name)
-        
-        # Removendo imagens antigs
-        if self.pk:
-            old_obj = Company.objects.filter(pk=self.pk).first()
-            if old_obj and old_obj.logo != self.logo:
-                self.__delete_file_if_exists(old_obj.logo)
-            if old_obj and old_obj.thumbnail:
-                self.__delete_file_if_exists(old_obj.thumbnail)
-            
+                          
         super(Company, self).save(*args, **kwargs)
 
         # Criando a thumbnail
@@ -94,18 +86,16 @@ class Company(models.Model):
         if not self.logo:
             return
 
-        logo = Image.open(self.logo.path)
+        logo = Image.open(self.logo)
         size = (30, 30)
         logo.thumbnail(size)
 
         thumb_io = BytesIO()
         logo.save(thumb_io, logo.format, quality=85)
+        extension = f".{logo.format.lower()}"
 
-        name, extension = os.path.splitext(
-            self.logo.name)
-        thumb_filename = f"{name}_thumb{extension}"
 
-        self.thumbnail.save(thumb_filename, ContentFile(
+        self.thumbnail.save(f'{self.slug}_thumb{extension}', ContentFile(
             thumb_io.getvalue()), save=False)
 
     def __delete_file_if_exists(self, file):

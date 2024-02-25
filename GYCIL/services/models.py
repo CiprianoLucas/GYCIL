@@ -26,11 +26,11 @@ class Service(models.Model):
     companies_refused = models.ManyToManyField(Company, related_name='refused_services', blank=True)
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(f'{self.client.name}_{self.created_at}')          
+        self.slug = slugify(f'{self.id}_{self.category}')          
         super(Service, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.client.name}_{self.created_at}'
+        return f'{self.id}_{self.category}'
 
     class Meta:
         verbose_name = "Serviço"
@@ -40,18 +40,17 @@ class Service(models.Model):
 
 class Budget(models.Model):
     service = models.ForeignKey(Service, on_delete=models.DO_NOTHING)
-    company = models.ForeignKey(Company, on_delete=models.DO_NOTHING, blank=True, null=True)
-    slug = models.SlugField(unique=True, blank=True)
+    company = models.ForeignKey(Company, on_delete=models.DO_NOTHING)
+    slug = models.SlugField(unique=True)
     price = models.CharField(max_length=255, blank=True)
-    status = models.CharField(max_length=255, blank=True)
+    status = models.CharField(max_length=255, default="aguardando orçamento")
     date = models.CharField(max_length=255, blank=True)
-    description = models.TextField(max_length=3000)
+    description = models.TextField(max_length=3000, blank=True)
     hours_service = models.CharField(max_length=255, blank=True)
-    created_at = models.DateTimeField(default=timezone.now)
     
     def save(self, *args, **kwargs):
         self.slug = slugify(f'{self.service.id}_{self.company.fantasy_name}')          
-        super(Service, self).save(*args, **kwargs)
+        super(Budget, self).save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.service.id}_{self.company.fantasy_name}'

@@ -4,10 +4,11 @@
 {% endblock %}
 {% load static %}
 {% block head %}
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+  <script src="{% static 'services/js/index.js' %}"></script>
 {% endblock %}
 
 {% block content %}
+{% with clients_url="/servicos/cliente" %}
   <h2 class="mb-3 text-center">Serviços solicitados</h2>
   <hr />
   <div class="table-responsive">
@@ -16,10 +17,10 @@
         <tr>
           <th>ID</th>
           <th>Categoria</th>
-          <th>Estado</th>
-          <th>Cidade</th>
+          <th class="d-none d-sm-table-cell">Estado</th>
+          <th class="d-none d-sm-table-cell">Cidade</th>
           <th>Solicitante</th>
-          <th>Abertura</th>
+          <th class="d-none d-sm-table-cell">Abertura</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -28,25 +29,20 @@
           <tr>
             <td>{{ service.id }}</td>
             <td>{{ service.category.name }}</td>
-            <td>{{ service.state }}</td>
-            <td>{{ service.city }}</td>
+            <td class="d-none d-sm-table-cell">{{ service.state }}</td>
+            <td class="d-none d-sm-table-cell">{{ service.city }}</td>
             <td>{{ service.client.name }}</td>
-            <td>{{ service.created_at }}</td>
+            <td class="d-none d-sm-table-cell">{{ service.created_at }}</td>
 
             <td class="d-flex gap-1">
-              {% if form_action == '/servicos/empresa' %}
-                <h2 class="mb-3">Hello</h2>
-              {% elif form_action == '/servicos/cliente' %}
-                <h2 class="mb-3">Teste</h2>
-              {% else %}
-                <button data-url="{% url 'services:descriptions' service.id %}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#serviceModal">i</button>
-                <a href="#" class="btn btn-warning btn-sm" title="editar produto"><i class="bi bi-pencil"></i></a>
-              {% endif %}
-              <form method="post" action="#">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger btn-sm" title="remover produto"><i class="bi bi-trash"></i></button>
-              </form>
+            
+              <button data-url="{% url 'services:descriptions' service.id %}" type="button" class="btn btn-primary pe-3" data-bs-toggle="modal" data-bs-target="#serviceModal"><i class="bi bi-info-circle"></i></button>
+           
+            {% if form_action == clients_url %}
+              <button data-url="{% url 'services:budgets_service' service.id %}" type="button" class="btn btn-success pe-3" data-bs-toggle="modal" data-bs-target="#budgetModal"><i class="bi bi-newspaper"></i></button>
             </td>
+            {% endif %}
+            
           </tr>
           {% empty %}
           <tr>
@@ -79,7 +75,7 @@
   <!-- Button trigger modal -->
 
   <!-- Modal -->
-  <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
+  <div class="modal fade modal-lg" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -137,11 +133,47 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <button type="button" class="btn btn-primary">Aceitar</button>
+          <button type="button" class="btn btn-secondary me-3" data-bs-dismiss="modal">Fechar</button>
+          <div class="ms-auto">
+            <a href=""  type="button" class="btn btn-danger ms-3" id="button_refuse">Recusar</a>
+            <a href=""  type="button" class="btn btn-success ms-3" id="button_accept">Aceitar</a>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  {% if form_action == clients_url %}
+  <div class="modal fade" id="budgetModal" tabindex="-1" aria-labelledby="budgetModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="budgetModalLabel">Fornecedores</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Empresa</th>
+                <th>Valor</th>
+                <th>Data início</th>
+                <th>Opções</th>
+              </tr>
+            </thead>
+            <tbody id="budgetTableBody">
 
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover">
+            Popover on bottom
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% endwith %}
 {% endblock %}
