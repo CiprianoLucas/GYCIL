@@ -2,9 +2,9 @@
 {% load crispy_forms_tags %}
 {% include 'partials/_head.html' %}
 {% block head %}
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+
   <script src="{% static 'base/css/login.css' %}"></script>
-  <script src="{% static 'products/js/createUpdate.js' %}"></script>
+
 {% endblock %}
 
 {% block content %}
@@ -39,20 +39,22 @@
                   <p>{{ error_message }}</p>
                 {% endif %}
               </div>
-
-              <div class="mb-3 mt-3">
-                <input class="form-control submitBtn" type="submit" value="Entrar" />
-              </div>
-
-              <p>Não tem um cadastro?</p>
-
-              <a class="color_link" href="">Cadastre agora</a>
-            </form>
+          
+          <div class="mb-3 mt-3">
+            <input class="form-control submitBtn" type="submit" value="Entrar" />
           </div>
+        </form>
+        
+        
+        <p>Não está cadastrado?</p>
+
+        <div class="mb-3">
+          <a href="{% url 'clients:create' %}">Cadastre agora como cliente</a>
+        </div>
+        <div>
+          <a href="{% url 'companies:create' %}">Cadastre agora como empresa</a>
         </div>
       </div>
-
-      <div class=""></div>
     </div>
   </div>
 {% endblock %}
