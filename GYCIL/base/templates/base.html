@@ -7,8 +7,9 @@
     {% comment %}Navbar{% endcomment %}
     {% include 'partials/_navbar.html' %}
 
-    <main class="container">
-      <header class="">
+    <main class="container-md">
+      <hr>
+      <header class="gap-4">
         <div>
           <h3>Diversos tipos de Serviços e empresas em um só lugar</h3>
           
@@ -18,8 +19,8 @@
         
         <img class="img img-fluid" width="700" src="{% static 'base/img/header-image.png' %}" alt="header-image" />
       </header>
-
-      <div class="row mb-4 my-4">
+      
+      <div class="row mb-4">
         <div class="col-8">
           <div class="input-group">
             <i class="bi bi-search input-group-text"></i>
@@ -29,9 +30,93 @@
         <div class="col-4">
           <input class="form-control btn btn-success" type="submit" value="Pesquisar" />
         </div>
-      </div>
+      </div>   
 
-      <section class="">
+      <section class="container-fluid rounded mt-5 shadow">
+        <div class="card first-md text-center">
+          <diiv class="card-header">
+            <div class="row center-sm middle-sm mt-3 mb-3">
+              <h5>Todas as categorias de serviços</h5>
+            </div>
+          </div>
+          <div class="row center-sm between-md space-between">
+            <div class="col-sm-4 col-md-1 false">
+              <div class="row center-sm text-center">
+                <a href="">
+                  <i class="bi bi-gear-wide"></i>
+                  <p>Assistência <br> Técnica</p>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-1 false">
+              <div class="row center-sm text-center">
+                <a href="">
+                  <i class="bi bi-car-front-fill"></i>
+                  <p>Autos</p>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-1 false">
+              <div class="row center-sm text-center">
+                <a href="">
+                  <i class="bi bi-pencil-fill"></i>
+                  <p>Aulas e <br> Disciplinas</p>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-1 false">
+              <div class="row center-sm text-center">
+                <a href="">
+                  <i class="bi bi-display"></i>
+                  <p>Tecnologia</p>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-1 false">
+              <div class="row center-sm text-center">
+                <a href="">
+                  <i class="bi bi-cup-straw"></i>
+                  <p>Eventos</p>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-1 false">
+              <div class="row center-sm text-center">
+                <a href="">
+                  <i class="bi bi-house"></i>
+                  <p>Serviços <br> Domésticos</p>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-1 false">
+              <div class="row center-sm text-center">
+                <a href="">
+                  <i class="bi bi-handbag"></i>
+                  <p>Moda e <br> Beleza</p>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-1 false">
+              <div class="row center-sm text-center">
+                <a href="">
+                  <i class="bi bi-tools"></i>
+                  <p>Reforma e <br> Reparos</p>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-1 false">
+              <div class="row center-sm text-center">
+                <a href="">
+                  <i class="bi bi-heart-pulse"></i>
+                  <p>Saúde</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-5">
         <div class="text-center">
           <h4>Quem contratou <br /> recomenda</h4>
 
@@ -74,7 +159,19 @@
         </div>
       </section>
 
-      <section class="">
+      <section class=" container-fluid card-container mt-5 mb-5">
+        <div class="card m-auto text-center border rounded shadow" style="width: 18rem;">
+          <img src="{% static 'base/img/card-img.png' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <i class="bi bi-tools"></i>
+            <h5 class="card-title">Reforma e Reparos</h5>
+            <p class="card-text">Serviços de Reformas e Reparos para a sua casa ou empresa. Os melhores profissionais.</p>
+            <a href="#" class="btn btn-success">Ver Reforma e Reparos</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-5 mb-5">
         <div class="text-center">
           <h4>O que é a GYCIL?</h4>
           <p>
@@ -101,9 +198,9 @@
         </div>
       </section>
 
-      <section class="">
+      <section class="container-fluid mt-5 mb-5 rounded-2">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body text-center rounded shadow">
             <div class="no-margin">
               <h4>Cadastre-se na GYCIL</h4>
               <P>Preencha os campos abaixo:</P>
@@ -126,14 +223,16 @@
                 </div>
                 <div class="col-sm-12 col-md-4">
                   <div class="col-sm-4 col-md-4">
-                    <input class="form-control submitBtn" type="submit" value="Cadastre-se" />
                   </div>
+                  <input class="form-control submitBtn" type="submit" value="Cadastre-se" />
                 </div>
               </div>
             </form>
           </div>
         </div>
       </section>
+
+
     </main>
     {% block content %}
 

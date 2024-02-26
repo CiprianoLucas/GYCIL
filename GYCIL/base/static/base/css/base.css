@@ -81,14 +81,17 @@ body {
 
   /* Icones da página inicial */
   i.bi-hand-thumbs-up {
+    color: #2D5D4F;
     font-size: 40px;
   }
   
   i.bi-cash-coin {
+    color: #2D5D4F;
     font-size: 40px;
   }
 
   i.bi-credit-card {
+    color: #2D5D4F;
     font-size: 40px;
   }
 
@@ -102,12 +105,81 @@ body {
   border-color: #ffffff;
 }
 
-.card-body {
-  border-radius: 5%;
+section .card-body {
   color: #fff;
   background-color: #2d5d4fd2;
 }
 
 .btn-success {
   background-color: #2D5D4F !important;
+}
+
+.btn-success:hover {
+  background-color: hsl(156, 70%, 45%);
+}
+
+/* Card Home Page Reforma e Reparos */
+.card-container .card-body {
+  background-color: #fff;
+}
+
+.card-title {
+  color: black;
+}
+
+.card-text {
+  color: black;
+}
+
+.card-container .card {
+  border-radius: 15px;
+}
+
+.card-header {
+  background-color: #fff;
+}
+
+.bi-tools {
+  color: #2D5D4F;
+  font-size: 30px;
+}
+
+.bi-gear-wide {
+  color: #2D5D4F;
+  font-size: 30px;
+}
+
+.bi-car-front-fill {
+  color: #2D5D4F;
+  font-size: 30px;
+}
+
+.bi-pencil-fill {
+  color: #2D5D4F;
+  font-size: 30px;
+}
+
+.bi-display {
+  color: #2D5D4F;
+  font-size: 30px;
+}
+
+.bi-cup-straw {
+  color: #2D5D4F;
+  font-size: 30px;
+}
+
+.bi-house {
+  color: #2D5D4F;
+  font-size: 30px;
+}
+
+.bi-handbag {
+  color: #2D5D4F;
+  font-size: 30px;
+}
+
+.bi-heart-pulse {
+  color: #2D5D4F;
+  font-size: 30px;
 }
