@@ -7,6 +7,11 @@ from django.contrib import auth
 
 def login(request):
     
+    user = request.user
+    
+    if user.username:
+        auth.logout(request)
+    
     form = AuthenticationForm(request)
     
     if request.method == 'POST':
@@ -27,4 +32,4 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect("login:index")
+    return redirect("home")
