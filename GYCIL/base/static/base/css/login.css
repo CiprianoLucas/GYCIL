@@ -1,9 +1,8 @@
 /* Centralizar Formulário de LOGIN */
 .center-block {
-    height: 50vh;
     display: flex;
+    justify-content: center;
     align-items: center;
-    margin-top: 15%;
 }
 
 @media screen {
