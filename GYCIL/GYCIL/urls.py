@@ -26,4 +26,5 @@ urlpatterns = [
     path('servicos/', include('services.urls')),
     path('login/', include('login.urls')),
     path('clientes/', include('clients.urls')),
+    path('dashboard/', include('dashboard.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

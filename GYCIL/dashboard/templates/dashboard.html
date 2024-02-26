@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+load
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+Serviços Realizados
+{% endblock %}
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+<script src="{% static 'products/js/createUpdate.js' %}"></script>
+{% endblock %}
+{% block content %}
