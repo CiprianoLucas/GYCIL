@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalhes do Serviço</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>Detalhes do Serviço</h1>
+    <p><strong>Nome:</strong> {{ service_request.name }}</p>
+    <p><strong>Email:</strong> {{ service_request.email }}</p>
+    <p><strong>Telefone:</strong> {{ service_request.phone }}</p>
+    <p><strong>Escolha do Serviço:</strong> {{ service_request.get_service_choice_display }}</p>
+    <p><strong>Status:</strong> {% if service_request.accepted %}Aceito{% else %}Pendente{% endif %}</p>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Página do Cliente</title>
+</head>
+<body>
+    <h1>Página do Cliente</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="id_name">Nome:</label>
+            {{ form.name }}
+        </div>
+        <div>
+            <label for="id_email">Email:</label>
+            {{ form.email }}
+        </div>
+        <div>
+            <label for="id_phone">Telefone:</label>
+            {{ form.phone }}
+        </div>
+        <div>
+            <label for="id_service_choice">Escolha do Serviço:</label>
+            {{ form.service_choice }}
+        </div>
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
