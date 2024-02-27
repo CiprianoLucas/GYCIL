@@ -13,7 +13,7 @@
     <div class="card shadow">
       <div class="card-body card-background rounded">
         <div class="table-responsive rounded">
-          <table class="table table-striped table-sm rounded">
+          <table class="table table-striped table rounded">
             <thead>
               <tr class="text-center">
                 <th class="d-none d-sm-table-cell">ID</th>
@@ -35,7 +35,7 @@
                   <td>{{ service.client.name }}</td>
                   <td class="d-none d-sm-table-cell">{{ service.created_at }}</td>
     
-                  <td class="d-flex gap-1 ps-3">
+                  <td class="d-flex gap-2 p-2">
                     <button data-url="{% url 'services:descriptions' service.id %}" type="button" class="btn btn-primary align-items-center" data-bs-toggle="modal" data-bs-target="#serviceModal"><i class="bi bi-info-circle"></i></button>
     
                     {% if user_type == "client" and not service.company %}
