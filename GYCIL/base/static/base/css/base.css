@@ -173,3 +173,7 @@ section .card-body {
   color: #2D5D4F;
   font-size: 30px;
 }
+
+.card-background {
+  background-color: #2D5D4F;
+}

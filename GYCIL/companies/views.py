@@ -24,7 +24,7 @@ def index(request):
     companies = Company.objects.order_by("-id")
 
     # Aplicando a paginação
-    paginator = Paginator(companies, 30)
+    paginator = Paginator(companies, 5)
     # /fornecedores?page=1 -> Obtendo a página da URL
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
