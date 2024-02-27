@@ -103,10 +103,11 @@ def create(request):
         if user_form.is_valid() and company_form.is_valid():
                        
             user = user_form.save()
-            client = company_form.save(commit=False)
-            client.user = user
-            client.save()
-            messages.success(request, 'Cliente cadastrado')
+            company = company_form.save(commit=False)
+            company.user = user
+            company.save()
+            company_form.save_m2m()
+            messages.success(request, 'Empresa cadastrada')
             return redirect('companies:index')
         
         context = {
