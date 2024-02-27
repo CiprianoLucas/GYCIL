@@ -6,8 +6,7 @@ load
   Cadastro de Empresa
 {% endblock %}
 {% block head %}
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
-  <script src="{% static 'products/js/createUpdate.js' %}"></script>
+  <script src="{% static 'companies/js/create.js' %}"></script>
 {% endblock %}
 {% block content %}
   <div class="m-3">
@@ -32,7 +31,7 @@ load
         <div class="col-lg-6">{{ company_form.phone|as_crispy_field }}</div>
         <div class="col-lg-6">{{ user_form.email|as_crispy_field }}</div>
         <div class="col-lg-4">{{ company_form.logo|as_crispy_field }}</div>
-        <div class="col-lg-4">{{ company_form.categories|as_crispy_field }}</div>
+        <div class="col-lg-4">{{ company_form.categories |as_crispy_field }}</div>
       </div>
       <hr>
       <div class="row mb-3">

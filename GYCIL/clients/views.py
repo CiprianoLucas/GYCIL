@@ -6,20 +6,22 @@ from .forms import UserForm, ClientForm
 
 
 # Create your views here.
-def index(request):
-    users = Client.objects.all(). order_by('-id')
-    
-    context = {
-        "users": users
-    }
-    
-    return render(request, 'index.html', context)
-
 def create(request):
-       
+    
+    
+    user = request.user
+    
+    if user.username:
+        if Client.objects.filter(user=user).exists():
+            return redirect('companies:index')
+        else:
+            return redirect('services:index')
+    user_type = ""
+    
+    
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-        client_form = ClientForm(request.POST)
+        client_form = ClientForm(request.POST, request.FILES)
 
         if user_form.is_valid() and client_form.is_valid():
             user = user_form.save()
@@ -42,10 +44,8 @@ def create(request):
     
     context = {
     'user_form': user_form,
-    'client_form': client_form
+    'client_form': client_form,
+    'user_type': user_type
     }
     
     return render(request, 'clients/create.html', context)
-
-def login(request):
-    return render(request, "clients/login.html")

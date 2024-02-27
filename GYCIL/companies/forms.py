@@ -1,14 +1,18 @@
 from django import forms
-from .models import Company
+from .models import Company, Category
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from crispy_forms.helper import FormHelper
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit
 
 
 class CompanyForm(forms.ModelForm):
+    categories = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple)
     class Meta:
         model = Company
-        exclude = ["slug", "enabled", "created_at", "user"]
+        exclude = ["slug", "enabled", "created_at", "user", "thumbnail"]
         
         
         labels = {
@@ -24,6 +28,7 @@ class CompanyForm(forms.ModelForm):
             "state": "Estado",
             "phone": "Telefone",
             "logo": "Logomarca",
+            "categories": "Categorias",
         }
         
         def save(self, commit=True):
@@ -34,6 +39,22 @@ class CompanyForm(forms.ModelForm):
                 company.save()
             
             return company
+        
+        def clean(self):
+               
+            company_email = self.cleaned_data.get('email')
+            
+            try:
+                validate_email(company_email)
+            except ValidationError:
+                self.add_error('email', ValidationError('Informe um endereço de email válido'))
+                
+            return super().clean()
+        
+        def __init__(self, *args, **kwargs):
+            super(CompanyForm, self).__init__(*args, **kwargs)
+            self.helper = FormHelper()
+            self.helper.form_method = 'post'
               
 class UserForm(forms.ModelForm):
     class Meta:
@@ -60,14 +81,4 @@ class UserForm(forms.ModelForm):
             user.save()
             
         return user
-    
-    def clean(self):
-               
-        username = self.cleaned_data.get('username')
-        
-        try:
-            validate_email(username)
-        except ValidationError:
-            self.add_error('username', ValidationError('Informe um endereço de email válido'))
-            
-        return super().clean()
+
