@@ -9,7 +9,13 @@
 
 {% block content %}
   {% with budget_url='/servicos/meus_servicos' %}
-    <h2 class="mb-3 text-center">Serviços solicitados</h2>
+    {% if  user_type == "client" %}
+    <h2 class="mb-3 text-center">Serviços que solicitei</h2>
+    {% elif budget_url == form_action %}
+    <h2 class="mb-3 text-center">Serviços capturados</h2>
+    {% else %}
+    <h2 class="mb-3 text-center">Serviços pendentes na comunidade</h2>
+    {% endif %}
     <div class="card shadow">
       <div class="card-body card-background rounded">
         <div class="table-responsive rounded">
@@ -38,7 +44,7 @@
                   <td class="d-flex gap-2 p-2">
                     <button data-url="{% url 'services:descriptions' service.id %}" type="button" class="btn btn-primary align-items-center" data-bs-toggle="modal" data-bs-target="#serviceModal"><i class="bi bi-info-circle"></i></button>
     
-                    {% if user_type == "client" and not service.company %}
+                    {% if user_type == "client" and not service.price %}
                       <button data-url="{% url 'services:budgets_service' service.id %}" type="button" class="btn btn-success align-items-center" data-bs-toggle="modal" data-bs-target="#budgetModal"><i class="bi bi-newspaper"></i></button>
                     {% endif %}
                   </td>
@@ -211,7 +217,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title fs-5" id="budgetModalLabel">Fornecedores</h4>
+              <h4 class="modal-title fs-5" id="budgetModalLabel">Orçamentos para Aprovação</h4>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

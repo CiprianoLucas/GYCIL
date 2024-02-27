@@ -84,6 +84,51 @@ def search(request):
     
     return render(request, "companies/index.html", context)
 
+def search_q(request, q):
+    user = request.user
+    
+    if user.username:
+        if Client.objects.filter(user=user).exists():
+            # login_user = Client.objects.filter(user=user)
+            user_type = "client"
+        else:
+            user_type = "other"
+    else:
+        return redirect("login:index")
+    
+    search_value = q
+       
+    if user_type != "client":
+        if search_value:
+            return redirect(reverse('services:search', kwargs={'q': search_value}))
+        else:
+            return redirect('services:index')
+    
+    
+    if not search_value:
+        return redirect("companies:index")
+    
+    
+    
+    companies = Company.objects \
+        .filter(Q(fantasy_name__icontains=search_value) |
+                Q(city__icontains=search_value)|
+                Q(categories__name__icontains=search_value))\
+        .order_by("-id")
+           
+    # Criando o paginator
+    paginator = Paginator(companies, 30)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        "companies": page_obj,
+        "user_type": user_type
+        
+    }
+    
+    return render(request, "companies/index.html", context)
+
 def create(request):
     
     user = request.user

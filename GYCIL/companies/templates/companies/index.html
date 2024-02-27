@@ -50,7 +50,7 @@
                     </div>
                     {% comment %} <p>{{ company.city }}</p> {% endcomment %}
                       <p class="m-0">{{ company.fantasy_name }}</p>
-                    <a href=""><i class="bi bi-arrow-right"></a></i>
+                    <a href="{% url "services:create_company" company.id %}"><i class="bi bi-arrow-right"></a></i>
                   </div>
                 </div>
               </div>
