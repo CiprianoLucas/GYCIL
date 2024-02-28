@@ -18,7 +18,7 @@ Este projeto foi desenvolvido como parte do curso Entra21, com o objetivo de des
 ## Utilizadas
 - Django; 
 - AWS (Amazon Web Services); 
-- HTML/CSS; 
+- HTML/CSS/Bootstrap; 
 - JavaScript;
 - Figma;
 - Nginx;
